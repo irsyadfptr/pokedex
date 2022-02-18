@@ -6,34 +6,74 @@ import Header from '../components/Header';
 function HomePage() {
 
     const [pokemon, setPokemon] = useState([]);
-    const [load,setLoad] = useState(true);
+    const [offset, setOffset] = useState(30);
+    const [pokeData, setPokeData] = useState([]);
+    const [isFetching, setIsFetching] = useState(false);
     const [search, setSearch] = useState('');
 
-
-    const getPokemmon = async () => {
-        let arr = [];
-        for (let i = 1; i < 20; i++){
-            arr.push(await getData(i))
-        }
-        console.log(arr);
-        setPokemon(arr);
-        setLoad(false)
+    const loadPokemon = () => {
+        let url = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=30";
+        axios.get(url).then(response => {
+            setPokemon(response.data.results);
+            pokemonIdGenerator();
+        })
     }
 
-    const getData = async (id) => {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const morePokemon = () => {
+        let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=30`;
+        axios.get(url).then(response => {
+            setPokemon([...pokemon, ...response.data.results]);
+            setOffset(offset + 20)
+            pokemonIdGenerator();
+            setIsFetching(false);
+            console.log(pokemon.length)
+            console.log(pokeData)
+        })
+    }
+
+    const pokemonProp = async (id) => {
+        let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        const response = await axios.get(url);
         return response;
     }
 
+    const pokemonIdGenerator = async () => {
+        let arr = [];
+        for (let i = 1; i <= pokemon.length + 30; i++){
+            arr.push(await pokemonProp(i))
+        }
+        setPokeData([...arr]);
+    }
+
+    const isScrolling = () => {
+        if(window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight){
+            return;
+        }
+        setIsFetching(true);
+    }
+
     useEffect(() => {
-        getPokemmon();
+        loadPokemon();
+        pokemonIdGenerator();
+        window.addEventListener("scroll", isScrolling);
+        return () => window.removeEventListener("scroll", isScrolling);
     }, [])
+
+    useEffect(() => {
+        if(isFetching) {
+            morePokemon();
+        }
+    }, [isFetching]);
+
+    if (pokemon.length === 0 && pokeData.length === 0) {
+        return <h1>Loading...</h1>;
+      }
 
     const handleChange = e => {
         setSearch(e.target.value);
     };
 
-    const filterPokemon = pokemon.filter(p =>
+    const filterPokemon = pokeData.filter(p =>
         p.data.name.toLowerCase().includes(search.toLowerCase())
       );
 
@@ -41,9 +81,6 @@ function HomePage() {
   return (
     <div>
         <Header input={handleChange}/>
-        {load ? (
-            <h1>Loading...</h1>
-        ) : (
         <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6'>
             {filterPokemon.map( pokemon =>(
                 <div key={pokemon.data.name}>
@@ -51,7 +88,6 @@ function HomePage() {
                 </div>
             ))}
         </div>
-        )}
     </div>
   )
 }
