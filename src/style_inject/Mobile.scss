@@ -1,0 +1,20 @@
+
+.mobile-size{
+    @media screen and (max-width: 640px) {
+        width: 100vw;
+        margin: 0;
+        padding: 0 1rem 0 1rem;
+    }
+}
+
+.mobileHide{
+    @media screen and (max-width: 640px) {
+        visibility: hidden;
+    }
+}
+
+.mobileVisibile{
+    @media screen and (max-width: 640px) {
+        display: none;
+    }
+}

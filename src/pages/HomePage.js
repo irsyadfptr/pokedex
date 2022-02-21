@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card';
 import Header from '../components/Header';
+import Spinner from '../components/Spinner';
 
 function HomePage() {
 
@@ -10,11 +11,13 @@ function HomePage() {
     const [pokeData, setPokeData] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
     const [search, setSearch] = useState('');
+    const [loading,setLoading] =useState(true);
 
     const loadPokemon = () => {
         let url = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=30";
         axios.get(url).then(response => {
             setPokemon(response.data.results);
+            setLoading(false);
             pokemonIdGenerator();
         })
     }
@@ -23,7 +26,7 @@ function HomePage() {
         let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=30`;
         axios.get(url).then(response => {
             setPokemon([...pokemon, ...response.data.results]);
-            setOffset(offset + 20)
+            setOffset(offset + 30)
             pokemonIdGenerator();
             setIsFetching(false);
             console.log(pokemon.length)
@@ -43,6 +46,7 @@ function HomePage() {
             arr.push(await pokemonProp(i))
         }
         setPokeData([...arr]);
+
     }
 
     const isScrolling = () => {
@@ -65,10 +69,6 @@ function HomePage() {
         }
     }, [isFetching]);
 
-    if (pokemon.length === 0 && pokeData.length === 0) {
-        return <h1>Loading...</h1>;
-      }
-
     const handleChange = e => {
         setSearch(e.target.value);
     };
@@ -79,15 +79,20 @@ function HomePage() {
 
 
   return (
+      
     <div>
         <Header input={handleChange}/>
-        <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-6'>
-            {filterPokemon.map( pokemon =>(
-                <div key={pokemon.data.name}>
-                    <Card pokemon={pokemon.data}/>
-                </div>
-            ))}
-        </div>
+        {loading ? (
+            <Spinner/>
+        ) : ( 
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-white pt-5 p-10'>
+                {filterPokemon.map( pokemon =>(
+                    <div key={pokemon.data.name}>
+                        <Card pokemon={pokemon.data}/>
+                    </div>
+                ))}
+            </div>
+        )})
     </div>
   )
 }

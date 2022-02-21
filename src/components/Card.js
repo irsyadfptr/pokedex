@@ -13,19 +13,24 @@ function Card({pokemon}) {
 
   return (
     <div>
-        <div className='my-3 p-3 rounded text-center shadow p-3 mb-5 bg-white rounded' >
+        <div className='my-3 rounded text-center shadow' >
             {/* <Link to={`/pokemon/${pokemon.name}`} className="link">
                 <h1>#{pokemon.id} {pokemon.name}</h1>
             </Link> */}
-            <Link className="w-full bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row" to={`/pokemon/${pokemon.id}`}>
-                <div className="w-full md:w-2/5">
-                    <img className="object-center object-cover h-full" src={pokemon.sprites.front_default} alt="photo"/>
+            <Link className={`flex flex-col items-center justify-center p-4 shadow rounded-xl pb-8 bg-gray-900`} to={`/pokemon/${pokemon.id}`}>
+                <div className="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40 mb-10 bg-white">
+                    <img className="h-full w-full" src={pokemon.sprites.front_default} alt="photo"/>
                 </div>
-                <div className="w-full md:w-3/5 text-left p-6 md:p-4 space-y-2">
-                    <p className="text-xl text-gray-700 font-bold">#{pokemon.id} {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
-                    <button>{pokemon.types[0].type.name}</button>
+                <p className="mt-4 font-bold text-xl mb-10 text-gray-50">#{pokemon.id} {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
+                {/* <button>{pokemon.types[0].type.name}</button> */}
+                <div className='flex justify-center items-center'>
+                    {pokemon.types.map( t =>(
+                        <button className={`bg-blue-500 rounded-full text-white px-5 py-1 m-1.5 font-semibold ${t.type.name}`}
+                        key={t.type.name}>{t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)}</button>
+                    ))}
                 </div>
-            </Link>
+
+        </Link>
         </div>
     </div>
   )
