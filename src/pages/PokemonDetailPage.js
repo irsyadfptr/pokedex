@@ -42,17 +42,16 @@ function PokemonDetailPage() {
         console.log(specDetails);
     } 
 
-    
 
   return (
     <div>
-        <Header/>
+        <Header visibility={"invisible"}/>
         {load ? (
             <Spinner/>
           ) : (
-            <div className='grid md:grid-cols-3 sm:grid-cols-1 md:px-15 sm:px-0 pb-5'>
-                <div className='p-0 md:p-12 md:pr-6 col-span-1'>
-                    <div className="relative border bg-white border-gray-200 rounded-xl mobile-size">
+            <div className='grid md:grid-cols-3 sm:grid-cols-1 md:px-20 sm:px-0 pb-5'>
+                <div className='p-0 md:p-12 md:pr-6 col-span-1 px-20 mobile-size'>
+                    <div className="relative border bg-white border-gray-200 rounded-xl">
                         {/* <span className={`absolute top-0 left-0 text-m font-bold p-2 rounded-br-xl rounded-tl-xl w-2/5 text-center py-3
                         ${details.types[0].type.name}`}>
                             Click me!!
@@ -68,8 +67,6 @@ function PokemonDetailPage() {
                                     key={t.type.name}>{t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)}</button>
                                 ))}
                             </div>
-                            {/* <p>{specDetails.flavor_text_entries[0].flavor_text.replace("\f", " ")}</p> */}
-
                             <div className='items-center justify-center'>
                                 <table className='table text-gray-400 border-separate space-y-6 text-sm w-full text-center'>
                                     <thead className='text-gray-500'>
@@ -92,109 +89,78 @@ function PokemonDetailPage() {
                         </div>
                     </div>
                 </div>
-                <div className="md:col-span-2 sm:col-span-1 p-12 pl-6 mobile-size">
+
+
+                <div className="md:col-span-2 sm:col-span-1 p-24 py-12 mobile-size flex flex-col">
                     <div className={`p-3`}>
                         <h1 className={`text-2xl txt-${details.types[0].type.name} py-2 font-semibold`}>
                             Little Description
                         </h1>
                         <p>{specDetails.flavor_text_entries[0].flavor_text.replace("\f", " ")}</p>
                     </div>
-                    <div className={`py-3 text-center w-full items-center justify-center`}>
-                        <h1 className={`font-semibold text-xl ${details.types[0].type.name} rounded-xl py-1 mb-2` }>Base Status</h1>
-                        <table className='table text-gray-400 border-separate space-y-6 w-full text-center'>
-                            <thead>
-                                <tr>
-                                    {details.stats.map( d =>(
-                                        <th className='sm:p-0 md:p-2 border-1 text-m' key={d.stat.name}>{d.stat.name.charAt(0).toUpperCase() + d.stat.name.slice(1)}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    {details.stats.map( (d, index) =>(
-                                        <td className='sm:p-0 md:p-2 border-1 text-sm' key={index}>{d.base_stat}</td>
-                                    ))}
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className={`flex text-center py-3 pt-1 font-semibold border-2 rounded-xl mb-8`}>
-                        <div className='flex-grow'>
-                            <h1 className={`py-1 text-m`}>Egg Groups</h1>
-                            {specDetails.egg_groups.map( e =>(
-                                    <p className='text-left px-2 py-1 text-sm'
-                                    key={e.url}>{e.name.charAt(0).toUpperCase() + e.name.slice(1)}</p>
-                            ))}
+                    
+                    <div className=''>
+                        <div className={`py-3 text-center w-full items-center justify-center`}>
+                            <h1 className={`font-semibold text-xl ${details.types[0].type.name} rounded-xl py-1 mb-2` }>Base Status</h1>
+                            <table className='table border-separate space-y-6 w-full text-center'>
+                                <thead>
+                                    <tr>
+                                        {details.stats.map( d =>(
+                                            <th className='sm:p-0 md:p-2 border-1 text-sm' key={d.stat.name}>{d.stat.name.charAt(0).toUpperCase() + d.stat.name.slice(1)}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {details.stats.map( (d, index) =>(
+                                            <td className='sm:p-0 md:p-2 border-1 text-sm' key={index}>{d.base_stat}</td>
+                                        ))}
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div>
-                            <h1 className='py-1 text-m font-semibold'>Hatch Counter</h1>
-                            <p className='py-1 text-sm'>{specDetails.hatch_counter} minutes</p>
-                        </div>
-                        <div className='flex-grow'>
-                            <h1 className='py-1 text-m font-semibold'>Growth Rate</h1>
-                            <p className='px-2 py-1 text-sm'>{specDetails.growth_rate.name.charAt(0).toUpperCase() + specDetails.growth_rate.name.slice(1)}</p>
-                        </div>
+                        <div className={`flex text-center py-3 pt-1 font-semibold border-2 rounded-xl mb-8`}>
+                            <div className='flex-grow'>
+                                <h1 className={`py-1 text-m`}>Egg Groups</h1>
+                                {specDetails.egg_groups.map( e =>(
+                                        <p className='text-center px-2 py-1 text-sm'
+                                        key={e.url}>{e.name.charAt(0).toUpperCase() + e.name.slice(1)}</p>
+                                ))}
+                            </div>
+                            <div>
+                                <h1 className='py-1 text-m font-semibold'>Hatch Counter</h1>
+                                <p className='py-1 text-sm'>{specDetails.hatch_counter} minutes</p>
+                            </div>
+                            <div className='flex-grow'>
+                                <h1 className='py-1 text-m font-semibold'>Growth Rate</h1>
+                                <p className='px-2 py-1 text-sm'>{specDetails.growth_rate.name.charAt(0).toUpperCase() + specDetails.growth_rate.name.slice(1)}</p>
+                            </div>
 
+                        </div>
+                        <div className={`flex text-center py-3 pt-1 font-semibold border-2 rounded-xl`}>
+                            <div className='flex-grow'>
+                                <h1 className='py-1 text-m font-semibold'>Habitat</h1>
+                                <p className='py-1 text-sm text-center px-2'>{(specDetails.habitat === null) ? "-" : specDetails.habitat.name.charAt(0).toUpperCase() + specDetails.habitat.name.slice(1)}</p>
+                            </div>
+                            <div className='flex-grow'>
+                                <h1 className='py-1 text-m font-semibold'>Capture Rate</h1>
+                                <p className='py-1 text-sm'>{specDetails.capture_rate}%</p>
+                            </div>
+                            <div className='flex-grow'>
+                                <h1 className='py-1 text-m font-semibold'>Base Hapiness</h1>
+                                <p className='py-1 text-sm'>{specDetails.base_happiness}%</p>
+                            </div>
+                            <div className='flex-grow'>
+                                <h1 className='py-1 text-m font-semibold'>Base Experience</h1>
+                                <p className='py-1 text-sm'>{details.base_experience}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className={`flex text-center py-3 pt-1 font-semibold border-2 rounded-xl`}>
-                        <div className='flex-grow'>
-                            <h1 className='py-1 text-m font-semibold'>Habitat</h1>
-                            <p className='py-1 text-sm text-left px-2'>{specDetails.habitat.name.charAt(0).toUpperCase() + specDetails.habitat.name.slice(1)}</p>
-                        </div>
-                        <div className='flex-grow'>
-                            <h1 className='py-1 text-m font-semibold'>Capture Rate</h1>
-                            <p className='py-1 text-sm'>{specDetails.capture_rate}%</p>
-                        </div>
-                        <div className='flex-grow'>
-                            <h1 className='py-1 text-m font-semibold'>Base Hapiness</h1>
-                            <p className='py-1 text-sm'>{specDetails.base_happiness}%</p>
-                        </div>
-                        <div className='flex-grow'>
-                            <h1 className='py-1 text-m font-semibold'>Base Experience</h1>
-                            <p className='py-1 text-sm'>{details.base_experience}</p>
-                        </div>
-                    </div>
-                    {/* <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Available Moves</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    {details.moves.map( (m, index) =>(
-                                        <th key={index}>{m.move.name}</th>
-                                    ))}
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> */}
                 </div>
             </div>
           )}
     </div>
   )
-    // <div>
-    //     {load ? (
-    //         <h1>Loading...</h1>
-    //     ) : (
-    //         <div className='my-3 p-3 rounded text-center shadow p-3 mb-5 bg-white rounded'>
-    //         {/* <Link to={`/pokemon/${pokemon.name}`} className="link">
-    //             <h1>#{pokemon.id} {pokemon.name}</h1>
-    //         </Link> */}
-    //         <div className="w-full bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row">
-    //             <div className="w-full md:w-2/5">
-    //                 <img className="object-center object-cover h-full" src={details.sprites.front_default} alt="photo"/>
-    //             </div>
-    //             <div className="w-full md:w-3/5 text-left p-6 md:p-4 space-y-2">
-    //                 <p className="text-xl text-gray-700 font-bold">#{details.id} {details.name.charAt(0).toUpperCase() + details.name.slice(1)}</p>
-    //                 <button>{details.types[0].type.name}</button>
-    //             </div>
-    //         </div>
-    //     </div>
-    //     )}
-    // </div>
 }
 
 export default PokemonDetailPage
