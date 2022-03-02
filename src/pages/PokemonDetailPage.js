@@ -5,20 +5,28 @@ import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 import '../style_inject/StyleInject.scss';
 import '../style_inject/Mobile.scss'
+import { useSelector } from 'react-redux';
+import { setDetailPokedata, setDetailPokemon } from '../redux/actions/pokeAction';
+import { useDispatch } from 'react-redux';
 
 function PokemonDetailPage() {
 
-    const [details, setDetails] = useState([]);
-    const [specDetails, setSpecDetails] = useState([]);
+    const dispatch = useDispatch()
     const [load, setLoad] = useState(true);
+
+    const details = useSelector((state) => state.allPokeDetail.pokemon)
+    const specDetails = useSelector((state) => state.allPokeDataDetail.pokeData)
+
+    console.log(details)
+    console.log(specDetails)
 
     let { id } = useParams()
 
     const getPokemmon = async () => {
         const pokeDetail = await getData(id);
         const pokeDetailSpec = await getSpeciesData(id);
-        setDetails(pokeDetail.data);
-        setSpecDetails(pokeDetailSpec.data);
+        dispatch(setDetailPokemon(pokeDetail.data))
+        dispatch(setDetailPokedata(pokeDetailSpec.data));
         setLoad(false)
     }
 
@@ -52,10 +60,6 @@ function PokemonDetailPage() {
             <div className='grid md:grid-cols-3 sm:grid-cols-1 md:px-20 sm:px-0 pb-5'>
                 <div className='p-0 md:p-12 md:pr-6 col-span-1 px-20 mobile-size'>
                     <div className="relative border bg-white border-gray-200 rounded-xl">
-                        {/* <span className={`absolute top-0 left-0 text-m font-bold p-2 rounded-br-xl rounded-tl-xl w-2/5 text-center py-3
-                        ${details.types[0].type.name}`}>
-                            Click me!!
-                        </span> */}
                         <div className='flex justify-center pt-10 w-full'>
                             <img className="w-3/5 object-contain rounded-t-xl justify-self-center" src={details.sprites.front_default} alt="photo"/>
                         </div>

@@ -1,16 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function Card({pokemon}) {
-
-//     let types = [];
-
-//     for(let i = 0; i < pokemon.types.length; i++){
-//         types.push(pokemon.types[i].type.name)
-//     }
-
-//     console.log(types)
-
   return (
     <div>
         <div className='my-3 rounded text-center shadow' >
@@ -29,7 +21,6 @@ function Card({pokemon}) {
                         key={t.type.name}>{t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)}</button>
                     ))}
                 </div>
-
         </Link>
         </div>
     </div>
