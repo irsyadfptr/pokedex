@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import '../style_inject/StyleInject.scss';
 
 function Card({pokemon}) {
   return (
@@ -21,7 +22,7 @@ function Card({pokemon}) {
                         key={t.type.name}>{t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)}</button>
                     ))}
                 </div>
-        </Link>
+            </Link>
         </div>
     </div>
   )
