@@ -9,6 +9,8 @@ import FilterSort from '../components/FilterSort';
 import { filterData, orderData, searchData, sortData, toggleSearchingBox } from '../redux/features/searchBox';
 import Spinner from '../components/Spinner';
 import NewSpinner from '../components/NewSpinner';
+import { Offline, Online } from 'react-detect-offline';
+import InternetDownPage from './InternetDownPage';
 
 
 
@@ -51,6 +53,14 @@ function HomePage() {
         }
     }, [fetchingStats, search, filter, sort, order]);
 
+    const searchToggle = () => {
+        dispatch(toggleSearchingBox())
+        if(toggleSearchBox === false){
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    }
+
     const sortId = () => {
         dispatch(sortData("id"))
     }
@@ -61,14 +71,6 @@ function HomePage() {
 
     const sortType = () => {
         dispatch(sortData("type"))
-    }
-
-    const searchToggle = () => {
-        dispatch(toggleSearchingBox())
-        if(toggleSearchBox === false){
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
     }
 
     const handleChange = e => {
@@ -88,29 +90,34 @@ function HomePage() {
   return (
       
     <div>
-        <Header toggle={searchToggle}/>
-        {toggleSearchBox && (
-            <FilterSort 
-            handleChange={handleChange} 
-            handleSelect={handleSelect} value={filter}
-            sortId={sortId} sortName={sortName} sortType={sortType} 
-            order={handleClick} toggle={order}
-            />
-        )}
-        {loading ? (
-            <Spinner/>
-        ) : ( 
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-white pt-5 p-10'>
-                {pokeData && pokeData.map( (pokemon, index) =>(
-                    <div key={index}>
-                        <Card pokemon={pokemon}/>
-                    </div>
-                ))} 
-            </div>
-        )}
-        {fetchingStats && (
-            < NewSpinner />
-        )}
+        <Offline>
+            <InternetDownPage/>
+        </Offline>
+        <Online>
+            <Header toggle={searchToggle}/>
+            {toggleSearchBox && (
+                <FilterSort 
+                handleChange={handleChange} 
+                handleSelect={handleSelect} value={filter}
+                sortId={sortId} sortName={sortName} sortType={sortType} 
+                order={handleClick} toggle={order}
+                />
+            )}
+            {loading ? (
+                <Spinner/>
+            ) : (
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-white pt-5 p-10'>
+                    {pokeData && pokeData.map((pokemon, index) =>(
+                        <div key={index}>
+                            <Card pokemon={pokemon}/>
+                        </div>
+                    ))} 
+                </div>
+            )}
+            {fetchingStats && (
+                < NewSpinner />
+            )}
+        </Online>
     </div>
   )
 }

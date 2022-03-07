@@ -6,7 +6,6 @@ export const loadPokemon = createAsyncThunk(
   async({offset, sort, order, search, filter}) => {
     let array = [];
 
-
     const pokeList = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`
     );

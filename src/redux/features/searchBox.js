@@ -34,15 +34,3 @@ const pagingSlice =  createSlice({
 
 export const { searchData, filterData, sortData, toggleSearchingBox, orderData } = pagingSlice.actions;
 export default pagingSlice.reducer;
-
-// addItem(state, action: PayloadAction<IStoredPokemonCard>) {
-//     const pokemonCard = action.payload
-
-//     state.cards.push(pokemonCard)
-//   },
-//   removeItem(state, action: PayloadAction<string>) {
-//     const pokemonCardUUID = action.payload
-//     const cards = state.cards.filter(({ uuid }) => uuid !== pokemonCardUUID)
-
-//     state.cards = cards
-//   },
