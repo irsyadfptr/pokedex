@@ -5,7 +5,8 @@ const initialState = {
     filter: '',
     sort: "id",
     toggle: false,
-    order: true
+    order: true,
+    testSort: {order: 'asc', orderBy: 'id'}
 }
 
 const pagingSlice =  createSlice({

@@ -13,9 +13,6 @@ import { Offline, Online } from 'react-detect-offline';
 import InternetDownPage from './InternetDownPage';
 
 
-
-
-
 function HomePage() {
 
     const search = useSelector(state => state.pagingFunction.search)
