@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../style_inject/StyleInject.scss';
 
@@ -9,7 +8,7 @@ function Card({pokemon}) {
         <div className='my-3 rounded text-center shadow card' >
             <Link className={`flex flex-col items-center justify-center p-4 shadow rounded-xl pb-8 bg-gray-900`} to={`/pokemon/${pokemon.id}`}>
                 <div className="inline-flex shadow-lg border border-gray-200 rounded-full overflow-hidden h-40 w-40 mb-10 bg-white">
-                    <img className="h-full w-full" src={pokemon.sprites.front_default} alt="photo"/>
+                    <img className="h-full w-full" src={pokemon.sprites.front_default} alt=""/>
                 </div>
                 <p className="mt-4 font-bold text-xl mb-10 text-gray-50">#{pokemon.id} {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
                 <div className='flex justify-center items-center'>

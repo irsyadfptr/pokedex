@@ -14,7 +14,7 @@ function FilterSort({handleChange, handleSelect, sortName, sortId, sortType, ord
                         type='text'
                         onChange={handleChange}
                         placeholder='Search'
-                        debounceTimeout={300} minLength={5}
+                        debounceTimeout={300} minLength={3}
                     />
                     </form>
                 </div>

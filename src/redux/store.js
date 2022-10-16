@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleWare } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import pokeListReducer from "./features/pokeList";
 import pagingReducer from "./features/searchBox";
 import pokeDataReducer from "./features/pokeDetail";

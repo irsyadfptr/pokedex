@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Header({toggle, visibility}) {
@@ -16,7 +16,7 @@ function Header({toggle, visibility}) {
           </Link>
           <div className='flex justify-end'>
             <button className={`mb-2 sm:mb-0 px-8 font-bold text-xl ${visibility} w-24`}onClick={toggle}>
-              <img src='https://cdn2.iconfinder.com/data/icons/font-awesome/1792/search-512.png'></img>
+              <img src='https://cdn2.iconfinder.com/data/icons/font-awesome/1792/search-512.png' alt=''></img>
             </button>
           </div>
         </nav>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
@@ -7,7 +7,6 @@ import '../style_inject/Mobile.scss'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { loadDetail } from '../redux/features/pokeDetail';
-import NewSpinner from '../components/NewSpinner';
 import { Offline, Online } from 'react-detect-offline';
 import InternetDownPage from './InternetDownPage';
 
@@ -15,7 +14,6 @@ function PokemonDetailPage() {
 
     const dispatch = useDispatch()
 
-    const pokedata = useSelector((state) => state)
     const details = useSelector((state) => state.pokedata.pokedata[0])
     const specDetails = useSelector((state) => state.pokedata.pokedata[1])
     const load = useSelector((state) => state.pokedata.loading)
@@ -45,7 +43,7 @@ function PokemonDetailPage() {
                     <div className='p-0 md:p-12 md:pr-6 col-span-1 px-20 mobile-size'>
                         <div className="relative border bg-white border-gray-200 rounded-xl">
                             <div className='flex justify-center pt-10 w-full'>
-                                <img className="w-3/5 object-contain rounded-t-xl justify-self-center" src={details.sprites.front_default} alt="photo"/>
+                                <img className="w-3/5 object-contain rounded-t-xl justify-self-center" src={details.sprites.front_default} alt=""/>
                             </div>
                             <div className="sm:px-5 md:p-5 flex-col">
                                 <h2 className={`text-2xl font-bold text-center mb-5`}>{details.name.charAt(0).toUpperCase() + details.name.slice(1)}</h2>

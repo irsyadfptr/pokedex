@@ -1,10 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Card from '../components/Card';
 import Header from '../components/Header';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchingData, loadPokemon } from '../redux/features/pokeList';
+import { fetchingData, loadPokemon, updateOffset } from '../redux/features/pokeList';
 import FilterSort from '../components/FilterSort';
 import { filterData, orderData, searchData, sortData, toggleSearchingBox } from '../redux/features/searchBox';
 import Spinner from '../components/Spinner';
@@ -21,34 +20,24 @@ function HomePage() {
     const order = useSelector(state => state.pagingFunction.order)
     const sort = useSelector(state => state.pagingFunction.sort)
 
-
-
     const dispatch = useDispatch()
     const pokeData = useSelector(state => state.pokemons.pokemonsList[1])
-    const test = useSelector(state => state)
 
     const fetchingStats = useSelector(state => state.pokemons.isFetching)
     const offset = useSelector(state => state.pokemons.offset)
     const loading = useSelector(state => state.pokemons.loading)
 
-    const isScrolling = () => {
-        if(window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight){
-            return
-        }
-        dispatch(fetchingData());
-    }
-
     useEffect(() => {
+        window.onscroll = function() {
+            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                if (!loading){
+                    dispatch(updateOffset())
+                    }
+              dispatch(fetchingData())
+            }
+        };
         dispatch(loadPokemon({offset, sort, order, search, filter}))
-        window.addEventListener("scroll", isScrolling);
-        return () => window.removeEventListener("scroll", isScrolling);
-    }, [dispatch, search, filter, sort, order])
-
-    useEffect(() => {
-        if(fetchingStats) {
-            dispatch(loadPokemon({offset, sort, order, search, filter}));
-        }
-    }, [fetchingStats, search, filter, sort, order]);
+    }, [dispatch, search, filter, sort, order, offset, loading])
 
     const searchToggle = () => {
         dispatch(toggleSearchingBox())
@@ -81,8 +70,6 @@ function HomePage() {
     const handleClick = () => {
         dispatch(orderData());
     }
-
-    console.log(order)
 
   return (
       

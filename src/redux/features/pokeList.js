@@ -70,22 +70,18 @@ const pokemonSlice = createSlice({
       fetchingData: (state) => {
         state.isFetching = true
     },
+    updateOffset: (state) => {
+        state.offset += 20
+    }
   },
   extraReducers: {
-    [loadPokemon.pending]: () => {
-      console.log("Pending");
-    },
+
     [loadPokemon.fulfilled]: (state, { payload }) => {
-      console.log("Fetched Successfully!");
-      return { ...state, pokemonsList: payload, isFetching: false, loading:false,
-        offset: state.offset + 20,};
-    },
-    [loadPokemon.rejected]: () => {
-      console.log("Rejected!");
+      return { ...state, pokemonsList: payload, isFetching: false, loading:false};
     },
   },
 });
 
-export const {fetchingData} = pokemonSlice.actions;
+export const {fetchingData, updateOffset} = pokemonSlice.actions;
 export const getAllPokemonList = (state) => state.pokemons.pokemonsList;
 export default pokemonSlice.reducer;

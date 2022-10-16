@@ -4,9 +4,7 @@ import axios from "axios";
 export const loadDetail = createAsyncThunk(
     "loadDetail",
     async(id)  => {
-        let array = []
-        console.log(id)
- 
+        let array = [] 
             const responseData = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
         
     
@@ -28,15 +26,8 @@ const pokeDetailSlice = createSlice({
     initialState,
 
     extraReducers: {
-      [loadDetail.pending]: () => {
-        console.log("Pending");
-      },
       [loadDetail.fulfilled]: (state, { payload }) => {
-        console.log("Fetched Successfully!");
         return { ...state, pokedata: payload, loading:false};
-      },
-      [loadDetail.rejected]: () => {
-        console.log("Rejected!");
       },
     },
   });
